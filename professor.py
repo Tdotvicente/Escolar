@@ -7,7 +7,7 @@ class Professor(Pessoa):
         self.disciplina = disciplina
         self.data_arquivo = data_arquivo
 
-    def consultar_professor(self):
+    def consultar_dados_professor(self):
         print(
             f'Nome: {self.nome} \nIdade: {self.idade} \nDisciplinas: {self.disciplina}')
 
