@@ -11,12 +11,12 @@ class Professor(Pessoa):
         print(
             f'Nome: {self.nome} \nIdade: {self.idade} \nDisciplinas: {self.disciplina}')
 
-    def gravar_dados_professor(self):
+    def gravar_dados_professores(self):
         with open(self.data_arquivo, 'w') as arquivo:
             linha = f"Nome: {self.nome}, Idade: {self.idade}, Disciplina: {self.disciplina}\n"
             arquivo.write(linha)
 
-    def ler_dados_professor(self):
+    def ler_dados_professores(self):
         try:
             with open(self.data_arquivo, 'r') as arquivo:
                 linha = arquivo.readline().split()

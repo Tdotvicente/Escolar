@@ -1,7 +1,7 @@
 from pessoa import Pessoa
 
 
-class Aluno(Pessoa):
+class Aluno():
     def __init__(self, nome, idade, curso, data_arquivo='banco_de_dados_alunos.txt'):
         super().__init__(nome, idade)
         self.curso = curso

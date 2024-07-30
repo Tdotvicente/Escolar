@@ -1,5 +1,6 @@
 from aluno import Aluno
 from professor import Professor
+from busca import Buscar_aluno, Buscar_professor
 
 # Testando cadastro
 professor01 = Professor('Thiago Vicente', 36, 'Programação')
