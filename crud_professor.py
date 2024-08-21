@@ -48,10 +48,10 @@ class Bd_Professores(Professor):
                     if professor['Nome'].lower() == info_professor.lower():
                         professor['Nome'] = novo_dado.get('Nome', professor['Nome'])
                         professor['Idade'] = novo_dado.get('Idade', professor['Idade'])
-                        professor['Disciplina'] = novo_dado.get('Discplina', professor['Disciplina'])
+                        professor['Disciplina'] = novo_dado.get('Disciplina', professor['Disciplina'])
                         atualizado = True
 
-                    linha = f"{professor['Nome']}, {professor['Idade']}, {professor['Curso']}\n"
+                    linha = f"{professor['Nome']}, {professor['Idade']}, {professor['Disciplina']}\n"
                     arquivo.write(linha)
 
             if atualizado:
@@ -69,23 +69,23 @@ class Bd_Professores(Professor):
     def deletar_dados(self, nome_professor):
         try:
             professores = self.ler_dados_professores()
-            proefessor_encontrado = False
+            professor_encontrado = False
 
             with open(self.data_base, 'w') as arquivo:
                 for professor in professores:
                     if professor['Nome'].lower() != nome_professor.lower():
-                        linha = f"{professor['Nome']}, {professor['Idade']}, {professor['Curso']}\n"
+                        linha = f"{professor['Nome']}, {professor['Idade']}, {professor['disciplina']}\n"
                         arquivo.write(linha)
                     else:
-                        proefessor_encontrado = True
+                        professor_encontrado = True
 
-            if proefessor_encontrado:
+            if professor_encontrado:
                 print(f"Dados do professor {nome_professor} foram deletados.")
             else:
                 print(f"Professor {nome_professor} não encontrado.")
 
         except FileNotFoundError:
-            print("Erro! Arquivo não encontrado.")
+            print("Erro! Banco de dados não eoncontrado.")
 
         except Exception as e:
             print(f"Erro ao deletar dados: {e}")
@@ -104,7 +104,7 @@ class Bd_Professores(Professor):
                         professores_localizados.append(nome)
 
         except FileNotFoundError:
-            print(f"Erro! {arquivo} não encontrado.")
+            print("Erro! Banco de dados não eoncontrado.")
 
         except Exception as e:
             print(f"Erro ao ler arquivo {e}")

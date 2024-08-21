@@ -85,7 +85,7 @@ class Bd_Alunos(Aluno):
                 print(f"Aluno {nome_aluno} não encontrado.")
 
         except FileNotFoundError:
-            print("Erro! Arquivo não encontrado.")
+            print("Erro! Banco de dados não eoncontrado.")
 
         except Exception as e:
             print(f"Erro ao deletar dados: {e}")
@@ -104,8 +104,8 @@ class Bd_Alunos(Aluno):
                         alunos_localizados.append(nome)
 
         except FileNotFoundError:
-            print(f"Erro! {arquivo} não encontrado.")
-
+            print("Erro! Banco de dados não eoncontrado.")
+            
         except Exception as e:
             print(f"Erro ao ler arquivo {e}")
 
