@@ -15,20 +15,31 @@ class Bd_Professores(Professor):
             arquivo.write(linha)
 
 # Função para ler e exibir informações do professor, no banco de dados
-    def ler_dados_professores(self):
+    def ler_dados_professores(self, nome_parcial):
         professores = []
         try:
             with open(self.data_base, 'r') as arquivo:
                 for linha in arquivo:
-                    nome, idade, disciplina = linha.strip().split(',')
-                    professores.append({
-                        'Nome': nome.split(":")[1].strip(),
-                        'Idade': idade.split(":")[1].strip(),
-                        'Disciplina': disciplina.split(":")[1].strip()
-                    })
+
+                    # Criando instância para uma pesquisa apenas usando nome do professor
+                    pesquisa_parcial = linha.strip().split(',')
+                    nome = pesquisa_parcial[0].split(":").strip()
+
+                    # Adicionando o restante das informações do professor
+                    if nome_parcial.lower() in nome.lower():
+                        idade = pesquisa_parcial[1].split(":").strip()
+                        disciplina = pesquisa_parcial[2].split(":").strip()
+
+                        # Exibindo todas as informações
+                        professores.append({
+                            'Nome': nome,
+                            'Idade': idade,
+                            'Disciplina': disciplina
+                        })
 
                 return professores
 
+        # Tratamento de erros e excessões
         except FileNotFoundError:
             print('Erro! Banco de dados não encontrado.')
             return []
@@ -51,7 +62,8 @@ class Bd_Professores(Professor):
                         professor['Disciplina'] = novo_dado.get('Disciplina', professor['Disciplina'])
                         atualizado = True
 
-                    linha = f"{professor['Nome']}, {professor['Idade']}, {professor['Disciplina']}\n"
+                    # Revisando os novos dados, antes de substitui-los
+                    linha = f"Nome: {professor['Nome']}, Idade: {professor['Idade']}, Disciplina: {professor['Disciplina']}\n"
                     arquivo.write(linha)
 
             if atualizado:
@@ -59,6 +71,7 @@ class Bd_Professores(Professor):
             else:
                 print(f"As informaçoes do professor {info_professor} não foram encontrada.")
 
+        # Tratamento de erros e exceções
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
 
@@ -84,6 +97,7 @@ class Bd_Professores(Professor):
             else:
                 print(f"Professor {nome_professor} não encontrado.")
 
+        # Tratametos de erros e excessões
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
 
@@ -103,6 +117,7 @@ class Bd_Professores(Professor):
                     if nome_parcial.lower() in nome.lower():
                         professores_localizados.append(nome)
 
+        # Tratametos de erros e excessões
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
 

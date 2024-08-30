@@ -23,14 +23,15 @@ class Bd_Alunos(Aluno):
                 for linha in arquivo:
 
                     # Criando instância para uma pesquisa apenas usando nome do aluno
-                    partes = linha.strip().split(',')
-                    nome = partes[0].split(":").strip()
+                    pesquisa_parcial = linha.strip().split(',')
+                    nome = pesquisa_parcial[0].split(":").strip()
 
+                    # Adicionando o restante das informações do aluno
                     if nome_parcial.lower() in nome.lower():
-                        idade = partes[1].split(":")[1].strip()
-                        curso = partes[2].split(":")[1].strip()
+                        idade = pesquisa_parcial[1].split(":")[1].strip()
+                        curso = pesquisa_parcial[2].split(":")[1].strip()
 
-                        # Adicionando o restante das informações do aluno
+                        # Exibindo todas as informações
                         aluno.append({
                             'Nome': nome,
                             'Idade': idade,
@@ -98,6 +99,7 @@ class Bd_Alunos(Aluno):
             else:
                 print(f"Aluno {nome_aluno} não encontrado.")
 
+        # Tratametos de erros e excessões
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
 
@@ -117,6 +119,7 @@ class Bd_Alunos(Aluno):
                     if nome_parcial.lower() in nome.lower():
                         alunos_localizados.append(nome)
 
+        # Tratametos de erros e excessões
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
 
