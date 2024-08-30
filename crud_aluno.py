@@ -9,26 +9,37 @@ class Bd_Alunos(Aluno):
 
 
 # Função para criar novo cadastro de alunos, no banco de dados
+
     def gravar_dados_aluno(self):
         with open(self.data_base, 'a') as arquivo:
             linha = f"Nome: {self.nome}, Idade: {self.idade}, Curso: {self.curso}\n"
             arquivo.write(linha)
 
 # Função para ler e exibir informações do aluno, no banco de dados
-    def ler_dados_alunos(self):
-        alunos = []
+    def ler_dados_alunos(self, nome_parcial):
+        aluno = []
         try:
             with open(self.data_base, 'r') as arquivo:
                 for linha in arquivo:
-                    nome, idade, curso = linha.strip().split(',')
-                    alunos.append({
-                        'Nome': nome.split(":")[1].strip(),
-                        'Idade': idade.split(":")[1].strip(),
-                        'Curso': curso.split(":")[1].strip()
-                    })
 
-                return alunos
+                    # Criando instância para uma pesquisa apenas usando nome do aluno
+                    partes = linha.strip().split(',')
+                    nome = partes[0].split(":").strip()
 
+                    if nome_parcial.lower() in nome.lower():
+                        idade = partes[1].split(":")[1].strip()
+                        curso = partes[2].split(":")[1].strip()
+
+                        # Adicionando o restante das informações do aluno
+                        aluno.append({
+                            'Nome': nome,
+                            'Idade': idade,
+                            'Curso': curso
+                        })
+
+                return aluno
+
+        # Tratamento de erros e exceções
         except FileNotFoundError:
             print('Erro! Banco de dados não encontrado.')
             return []
@@ -51,14 +62,17 @@ class Bd_Alunos(Aluno):
                         aluno['Curso'] = novo_dado.get('Curso', aluno['Curso'])
                         atualizado = True
 
-                    linha = f"{aluno['Nome']}, {aluno['Idade']}, {aluno['Curso']}\n"
+                    # Revisando os novos dados, antes de substitui-los
+                    linha = f"Nome: {aluno['Nome']}, Idade: {aluno['Idade']}, Curso: {aluno['Curso']}\n"
                     arquivo.write(linha)
 
             if atualizado:
                 print(f"Informações do aluno {info_aluno} foram atualizada.")
             else:
-                print(f"As informaçoes do aluno {info_aluno} não foi encontrada.")
+                print(
+                    f"As informaçoes do aluno {info_aluno} não foi encontrada.")
 
+        # Tratametos de erros e excessões
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
 
@@ -105,7 +119,7 @@ class Bd_Alunos(Aluno):
 
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
-            
+
         except Exception as e:
             print(f"Erro ao ler arquivo {e}")
 
