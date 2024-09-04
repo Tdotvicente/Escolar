@@ -1,11 +1,10 @@
 from crud_aluno import Bd_Alunos
 from crud_professor import Bd_Professores
 
-
 class Menu_cli(Bd_Alunos, Bd_Professores):
     def __init__(self):
-        self.bd_alunos = Bd_Alunos()
-        self.bd_professores = Bd_Professores()
+        self.bd_alunos = Bd_Alunos(nome=None, idade=None, curso=None)
+        self.bd_professores = Bd_Professores(nome=None, idade=None, disciplina=None)
 
     # Criando opções para um menu CRUD em CLI
     def mostrar_menu(self):
@@ -36,7 +35,6 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
                 break
             else:
                 print("Opção inválida, tente novamente!")
-                return
 
     # Implementando menu de cadastro
     def submenu_cadastrar(self):
@@ -182,22 +180,64 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             print("Opção inválida! Digite uma opção válida.")
             return
 
+    # apagando a informação
     def submenu_excluir(self):
         print("Digite A, para excluir o aluno ou digite P, Para excluir o professor")
 
-        submenu = input("Escolha a opção do menu")
+        submenu = input("Escolha a opção do menu: ")
 
+        # apagando um aluno e suas informações
         if submenu.lower() == 'a':
             nome_aluno = input("Digite o nome do aluno: ")
             self.bd_alunos.deletar_dados(nome_aluno)
 
+        # Apagando um professor e suas informações
         elif submenu.lower() == 'p':
             nome_professor = input("Digite o nome do professor: ")
             self.bd_professores.deletar_dados(nome_professor)
+
 
         else:
             print("Opção inválida, digite uma opção válida!")
             return
 
     def submenu_buscar(self):
-        print
+        print("Digite A, para aluno ou P, para professor")
+
+        submenu = input("Escolha a opção do menu: ")
+
+        if submenu.lower() == 'a':
+            nome_aluno = input("Digite o nome do aluno: ")
+            resultado = self.bd_alunos.buscar_dados(nome_aluno)
+
+            # Exibindo o(s) aluno(s) encontrado(s)
+            if resultado:
+                print("Aluno(s) encontrado(s)!")
+                for aluno in resultado:
+                    print(aluno)
+
+            else:
+                print("Aluno(s) não encontrado(s)")
+
+        elif submenu.lower() == 'p':
+            nome_professor = input("Digite o(s) nome do(s) professor(es): ")
+            resultado = self.bd_professores(nome_professor)
+
+            # Exibindo o(s) professor(s) encontrado(s)
+            if resultado:
+                print("Aluno(s) encontra(s)!")
+                for professor in resultado:
+                    print(professor)
+
+            else:
+                print("Professor(es) não encontrado(s)!")
+
+        else:
+            print("Opção inválida! Use uma das opções válidas")
+
+def Main():
+    menu = Menu_cli()
+    menu.mostrar_menu()
+
+if __name__ == "__main__":
+    Main()
