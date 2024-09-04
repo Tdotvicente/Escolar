@@ -46,7 +46,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
         if submenu.lower() == 'a':
             nome = input("Nome completo: ")
             idade = input('Idade: ')
-            curso = input("Curso desejado")
+            curso = input("Curso desejado: ")
 
             # Validando idade do aluno
             if not idade.isdigit():
