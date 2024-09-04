@@ -133,7 +133,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             # Novos dados para o aluno
             novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual):")
             nova_idade = input("Digite a nova idade (ou pressione enter, para manter o atual): ")
-            novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual)")
+            novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual): ")
 
             # Atualizando dicionário
             novo_dado = {}
