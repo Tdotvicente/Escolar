@@ -92,7 +92,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             alunos = self.bd_alunos.ler_dados_alunos(nome_parcial)
 
             # loop para localizar o aluno selecionado, dentro do banco de dados
-            if aluno:
+            if alunos:
                 print("Aluno encontrado!\n")
                 for aluno in alunos:
                     print(f"Nome: {aluno['Nome']}\n")
@@ -108,7 +108,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             professores = self.bd_professores.ler_dados_professores(nome_parcial)
 
             #loop para localizar o professor selecionado, dentro do banco de dados
-            if professor:
+            if professores:
                 print("Professor encontrado!\n")
                 for professor in professores:
                     print(f"Nome: {professor['Nome']}\n")
