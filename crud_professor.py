@@ -1,18 +1,21 @@
 from professor import Professor
-
+from crud import Criar_banco_de_dados
 
 # Configurando parâmetros básicos de banco de dados CRUD
 class Bd_Professores(Professor):
-    def __init__(self, nome, idade, disciplina, data_base='banco_de_dados/banco_de_dados_professores.txt'):
+    def __init__(self, nome, idade, disciplina, caminho='banco_de_dados', arquivo='banco_de_dados_professor.txt'):
         super().__init__(nome, idade, disciplina)
-        self.data_base = data_base
-
+        self.data_base = Criar_banco_de_dados(caminho, arquivo)
 
 # Função para criar novo cadastro de professores, no banco de dados
     def gravar_dados_professor(self):
-        with open(self.data_base, 'a') as arquivo:
-            linha = f"Nome: {self.nome}, Idade: {self.idade}, Disciplina: {self.disciplina}\n"
-            arquivo.write(linha)
+        try:
+            with open(self.data_base, 'a') as arquivo:
+                linha = f"Nome: {self.nome}, Idade: {self.idade}, Disciplina: {self.disciplina}\n"
+                arquivo.write(linha)
+
+        except Exception as erro:
+            print(f"Erro ao gravar os dados no banco: {erro}")
 
 # Função para ler e exibir informações do professor, no banco de dados
     def ler_dados_professores(self, nome_parcial):
@@ -44,8 +47,8 @@ class Bd_Professores(Professor):
             print('Erro! Banco de dados não encontrado.')
             return []
 
-        except Exception as e:
-            print(f"Erro ao ler banco de dados: {e}")
+        except Exception as erro:
+            print(f"Erro ao ler banco de dados: {erro}")
             return []
 
 # Função para atualizar informações do professor, no banco de dados
@@ -73,10 +76,10 @@ class Bd_Professores(Professor):
 
         # Tratamento de erros e exceções
         except FileNotFoundError:
-            print("Erro! Banco de dados não eoncontrado.")
+            print("Erro! Banco de dados não encontrado.")
 
-        except Exception as e:
-            print(f"Erro ao atualizar dados: {e}")
+        except Exception as erro:
+            print(f"Erro ao atualizar dados: {erro}")
 
 # Excluindo informações do banco de dados de professores
     def deletar_dados(self, nome_professor):
@@ -99,10 +102,10 @@ class Bd_Professores(Professor):
 
         # Tratametos de erros e excessões
         except FileNotFoundError:
-            print("Erro! Banco de dados não eoncontrado.")
+            print("Erro! Banco de dados não encontrado.")
 
-        except Exception as e:
-            print(f"Erro ao deletar dados: {e}")
+        except Exception as erro:
+            print(f"Erro ao deletar dados: {erro}")
 
 # Buscar informação de um (ou mais) professores(s)
     def buscar_dados(self, nome_parcial):
@@ -119,9 +122,9 @@ class Bd_Professores(Professor):
 
         # Tratametos de erros e excessões
         except FileNotFoundError:
-            print("Erro! Banco de dados não eoncontrado.")
+            print("Erro! Banco de dados não encontrado.")
 
-        except Exception as e:
-            print(f"Erro ao ler arquivo {e}")
+        except Exception as erro:
+            print(f"Erro ao ler arquivo {erro}")
 
         return professores_localizados

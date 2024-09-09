@@ -31,7 +31,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             elif menu == '5':
                 self.submenu_buscar()
             elif menu == '0':
-                print("Sair do sistema...")
+                print("Saindo do sistema...")
                 break
             else:
                 print("Opção inválida, tente novamente!")
@@ -57,6 +57,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             self.bd_alunos.nome = nome
             self.bd_alunos.idade = int(idade)
             self.bd_alunos.curso = curso
+            self.bd_alunos.gravar_dados_aluno()
 
         # Coletando informação do professor
         elif submenu.lower() == 'p':
@@ -73,6 +74,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             self.bd_professores.nome = nome
             self.bd_professores.idade = int(idade)
             self.bd_professores.disciplina = disciplina
+            self.bd_professores.gravar_dados_professor()
 
         else:
             print("Opção inválida! Digite uma opção válida")
@@ -133,7 +135,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             # Novos dados para o aluno
             novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual):")
             nova_idade = input("Digite a nova idade (ou pressione enter, para manter o atual): ")
-            novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual): ")
+            novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual)")
 
             # Atualizando dicionário
             novo_dado = {}

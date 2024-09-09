@@ -1,19 +1,22 @@
 from aluno import Aluno
+from crud import Criar_banco_de_dados
 
 
 # Configurando parâmetros básicos de banco de dados CRUD
 class Bd_Alunos(Aluno):
-    def __init__(self, nome, idade, curso, data_base='banco_de_dados/banco_de_dados_alunos.txt'):
+    def __init__(self, nome, idade, curso, caminho='banco_de_dados', arqivo='banco_de_dados_aluno'):
         super().__init__(nome, idade, curso)
-        self.data_base = data_base
-
+        self.data_base = Criar_banco_de_dados(caminho, arqivo)
 
 # Função para criar novo cadastro de alunos, no banco de dados
-
     def gravar_dados_aluno(self):
-        with open(self.data_base, 'a') as arquivo:
-            linha = f"Nome: {self.nome}, Idade: {self.idade}, Curso: {self.curso}\n"
-            arquivo.write(linha)
+        try:
+            with open(self.data_base, 'a') as arquivo:
+                linha = f"Nome: {self.nome}, Idade: {self.idade}, Curso: {self.curso}\n"
+                arquivo.write(linha)
+
+        except Exception as erro:
+            print(f"Erro ao gravar dados no banco: {erro}")
 
 # Função para ler e exibir informações do aluno, no banco de dados
     def ler_dados_alunos(self, nome_parcial):
@@ -24,7 +27,7 @@ class Bd_Alunos(Aluno):
 
                     # Criando instância para uma pesquisa apenas usando nome do aluno
                     pesquisa_parcial = linha.strip().split(',')
-                    nome = pesquisa_parcial[0].split(":").strip()
+                    nome = pesquisa_parcial[0].split(":")[1].strip()
 
                     # Adicionando o restante das informações do aluno
                     if nome_parcial.lower() in nome.lower():
@@ -45,8 +48,8 @@ class Bd_Alunos(Aluno):
             print('Erro! Banco de dados não encontrado.')
             return []
 
-        except Exception as e:
-            print(f"Erro ao ler banco de dados: {e}")
+        except Exception as erro:
+            print(f"Erro ao ler banco de dados: {erro}")
             return []
 
 # Função para atualizar informações do aluno, no banco de dados
@@ -77,8 +80,8 @@ class Bd_Alunos(Aluno):
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
 
-        except Exception as e:
-            print(f"Erro ao atualizar dados: {e}")
+        except Exception as erro:
+            print(f"Erro ao atualizar dados: {erro}")
 
 # Excluindo informações do banco de dados de alunos
     def deletar_dados(self, nome_aluno):
@@ -103,8 +106,8 @@ class Bd_Alunos(Aluno):
         except FileNotFoundError:
             print("Erro! Banco de dados não eoncontrado.")
 
-        except Exception as e:
-            print(f"Erro ao deletar dados: {e}")
+        except Exception as erro:
+            print(f"Erro ao deletar dados: {erro}")
 
 # Buscar informação de um (ou mais) aluno(s)
     def buscar_dados(self, nome_parcial):
@@ -121,9 +124,9 @@ class Bd_Alunos(Aluno):
 
         # Tratametos de erros e excessões
         except FileNotFoundError:
-            print("Erro! Banco de dados não eoncontrado.")
+            print("Erro! Banco de dados não encontrado.")
 
-        except Exception as e:
-            print(f"Erro ao ler arquivo {e}")
+        except Exception as erro:
+            print(f"Erro ao ler arquivo: {erro}")
 
         return alunos_localizados
