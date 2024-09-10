@@ -44,6 +44,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
 
         # Coletando informação do aluno
         if submenu.lower() == 'a':
+            print("Cadastro de Aluno(a)\n")
             nome = input("Nome completo: ")
             idade = input('Idade: ')
             curso = input("Curso desejado: ")
@@ -58,12 +59,15 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             self.bd_alunos.idade = int(idade)
             self.bd_alunos.curso = curso
             self.bd_alunos.gravar_dados_aluno()
+            print()
 
         # Coletando informação do professor
         elif submenu.lower() == 'p':
+            print("Cadastro de professor(a)\n")
             nome = input("Nome completo: ")
             idade = input("Idade: ")
             disciplina = input("Disciplina lecionada: ")
+            print()
 
             # Validando dados do professor
             if not idade.isdigit():
@@ -75,9 +79,10 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             self.bd_professores.idade = int(idade)
             self.bd_professores.disciplina = disciplina
             self.bd_professores.gravar_dados_professor()
+            print()
 
         else:
-            print("Opção inválida! Digite uma opção válida")
+            print("Opção inválida! Digite uma opção válida\n")
             return
 
     # Lendo dados do elemento cadastrado
@@ -95,12 +100,12 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             if alunos:
                 print("Aluno encontrado!\n")
                 for aluno in alunos:
-                    print(f"Nome: {aluno['Nome']}\n")
-                    print(f"Idade: {aluno['Idade']}\n")
-                    print(f"Curso: {aluno['Curso']}")
+                    print(f"Nome: {aluno['Nome']}")
+                    print(f"Idade: {aluno['Idade']}")
+                    print(f"Curso: {aluno['Curso']}\n")
 
             else:
-                print("Nenhum aluno encontrado, com esse nome!")
+                print("Nenhum aluno encontrado, com esse nome!\n")
 
         # Lendo informação do professor
         elif submenu.lower() == 'p':
@@ -111,15 +116,15 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             if professores:
                 print("Professor encontrado!\n")
                 for professor in professores:
-                    print(f"Nome: {professor['Nome']}\n")
-                    print(f"Idade: {professor['Idade']}\n")
-                    print(f"Disciplina: {professor['Disciplina']}")
+                    print(f"Nome: {professor['Nome']}")
+                    print(f"Idade: {professor['Idade']}")
+                    print(f"Disciplina: {professor['Disciplina']}\n")
 
             else:
-                print("Nenhum professor encontrado, com esse nome!")
+                print("Nenhum professor encontrado, com esse nome!\n")
 
         else:
-            print("Opção inválida! Digite uma opção válida")
+            print("Opção inválida! Digite uma opção válida\n")
             return
 
     # Atualizando informações
@@ -141,7 +146,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
                 # Novos dados para o aluno
                 novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual): ")
                 nova_idade = input("Digite a nova idade (ou pressione enter, para manter o atual): ")
-                novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual): ")
+                novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual): \n")
 
                 # Atualizando dicionário
                 novo_dado = {}
@@ -152,16 +157,17 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
                     if nova_idade.isdigit():
                         novo_dado['Idade'] = int(nova_idade)
                     else:
-                        print('Idade inválida!')
+                        print('Idade inválida!\n')
                         return
                 if novo_curso:
                     novo_dado['Curso'] = novo_curso
 
                 # Chamando função para substituir dados aluno
                 self.bd_alunos.alterar_dados(info_aluno, novo_dado)
+                print(f"Informação(ões) atualizada(s).\n")
 
             else:
-                print("Aluno não encontrado com esse nome!")
+                print("Aluno não encontrado com esse nome!\n")
 
         elif submenu.lower() == 'p':
             info_professor = input("Digite o nome o nome do professor a ser atualizado: ")
@@ -185,17 +191,18 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
                     if nova_idade.isdigit():
                         novo_dado['Idade'] = int(nova_idade)
                     else:
-                        print("Idade inválida!")
+                        print("Idade inválida!\n")
                         return
                 if nova_disciplina:
                     novo_dado['Disciplina'] = nova_disciplina
 
                 # Chamando a função para substituir dados do professor
                 self.bd_professores.alterar_dados(info_professor, novo_dado)
+                print("Informação(ões) atualizada(s)\n")
 
             # Se o professor não for encontrado
             else:
-                print("Professor não encontrado com esse nome!")
+                print("Professor não encontrado com esse nome!\n")
 
         else:
             print("Opção inválida! Digite uma opção válida.")
@@ -211,15 +218,17 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
         if submenu.lower() == 'a':
             nome_aluno = input("Digite o nome do aluno: ")
             self.bd_alunos.deletar_dados(nome_aluno)
+            print("Aluno deletado com sucesso\n")
 
         # Apagando um professor e suas informações
         elif submenu.lower() == 'p':
             nome_professor = input("Digite o nome do professor: ")
             self.bd_professores.deletar_dados(nome_professor)
+            print("Professor deletado com sucesso\n")
 
 
         else:
-            print("Opção inválida, digite uma opção válida!")
+            print("Opção inválida, digite uma opção válida!\n")
             return
 
     def submenu_buscar(self):
@@ -235,10 +244,10 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             if resultado:
                 print("Aluno(s) encontrado(s)!")
                 for aluno in resultado:
-                    print(aluno)
+                    print(aluno,'\n')
 
             else:
-                print("Aluno(s) não encontrado(s)")
+                print("Aluno(s) não encontrado(s)\n")
 
         elif submenu.lower() == 'p':
             nome_professor = input("Digite o(s) nome do(s) professor(es): ")
@@ -248,13 +257,13 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             if resultado:
                 print("Aluno(s) encontra(s)!")
                 for professor in resultado:
-                    print(professor)
+                    print(professor,'\n')
 
             else:
-                print("Professor(es) não encontrado(s)!")
+                print("Professor(es) não encontrado(s)!\n")
 
         else:
-            print("Opção inválida! Use uma das opções válidas")
+            print("Opção inválida! Use uma das opções válidas\n")
 
 def Main():
     menu = Menu_cli()

@@ -26,12 +26,12 @@ class Bd_Professores(Professor):
 
                     # Criando instância para uma pesquisa apenas usando nome do professor
                     pesquisa_parcial = linha.strip().split(',')
-                    nome = pesquisa_parcial[0].split(":").strip()
+                    nome = pesquisa_parcial[0].split(":")[1].strip()
 
                     # Adicionando o restante das informações do professor
                     if nome_parcial.lower() in nome.lower():
-                        idade = pesquisa_parcial[1].split(":").strip()
-                        disciplina = pesquisa_parcial[2].split(":").strip()
+                        idade = pesquisa_parcial[1].split(":")[1].strip()
+                        disciplina = pesquisa_parcial[2].split(":")[1].strip()
 
                         # Exibindo todas as informações
                         professores.append({
@@ -54,18 +54,23 @@ class Bd_Professores(Professor):
 # Função para atualizar informações do professor, no banco de dados
     def alterar_dados(self, info_professor, novo_dado):
         try:
-            professores = self.ler_dados_professores()
+            professores = self.ler_dados_professores("")
             atualizado = False
 
+            # Abrir arquivo, para ser sobrescrito
             with open(self.data_base, 'w') as arquivo:
                 for professor in professores:
+
+                    # localizando professores atravéz do nome
                     if professor['Nome'].lower() == info_professor.lower():
+
+                        # Alterar as informações do professor localizado
                         professor['Nome'] = novo_dado.get('Nome', professor['Nome'])
                         professor['Idade'] = novo_dado.get('Idade', professor['Idade'])
                         professor['Disciplina'] = novo_dado.get('Disciplina', professor['Disciplina'])
                         atualizado = True
 
-                    # Revisando os novos dados, antes de substitui-los
+                    # reescrevendo as informações no banco de dados
                     linha = f"Nome: {professor['Nome']}, Idade: {professor['Idade']}, Disciplina: {professor['Disciplina']}\n"
                     arquivo.write(linha)
 

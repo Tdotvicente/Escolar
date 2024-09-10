@@ -4,7 +4,7 @@ from crud import Criar_banco_de_dados
 
 # Configurando parâmetros básicos de banco de dados CRUD
 class Bd_Alunos(Aluno):
-    def __init__(self, nome, idade, curso, caminho='banco_de_dados', arqivo='banco_de_dados_aluno'):
+    def __init__(self, nome, idade, curso, caminho='banco_de_dados', arqivo='banco_de_dados_aluno.txt'):
         super().__init__(nome, idade, curso)
         self.data_base = Criar_banco_de_dados(caminho, arqivo)
 
@@ -55,12 +55,17 @@ class Bd_Alunos(Aluno):
 # Função para atualizar informações do aluno, no banco de dados
     def alterar_dados(self, info_aluno, novo_dado):
         try:
-            alunos = self.ler_dados_alunos()
+            alunos = self.ler_dados_alunos("")
             atualizado = False
 
+            # Abrindo arquivo, em modo escrita 
             with open(self.data_base, 'w') as arquivo:
+
+                # Encontrando aluno correto, pelo nome
                 for aluno in alunos:
                     if aluno['Nome'].lower() == info_aluno.lower():
+
+                        # Atualizando dados confore a necessidade
                         aluno['Nome'] = novo_dado.get('Nome', aluno['Nome'])
                         aluno['Idade'] = novo_dado.get('Idade', aluno['Idade'])
                         aluno['Curso'] = novo_dado.get('Curso', aluno['Curso'])
@@ -78,7 +83,7 @@ class Bd_Alunos(Aluno):
 
         # Tratametos de erros e excessões
         except FileNotFoundError:
-            print("Erro! Banco de dados não eoncontrado.")
+            print("Erro! Banco de dados não encontrado.")
 
         except Exception as erro:
             print(f"Erro ao atualizar dados: {erro}")
@@ -104,7 +109,7 @@ class Bd_Alunos(Aluno):
 
         # Tratametos de erros e excessões
         except FileNotFoundError:
-            print("Erro! Banco de dados não eoncontrado.")
+            print("Erro! Banco de dados não encontrado.")
 
         except Exception as erro:
             print(f"Erro ao deletar dados: {erro}")
