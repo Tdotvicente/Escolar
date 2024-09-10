@@ -132,51 +132,70 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
         if submenu .lower() == 'a':
             info_aluno = input("Digite o nome do aluno a ser atualizado: ")
 
-            # Novos dados para o aluno
-            novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual):")
-            nova_idade = input("Digite a nova idade (ou pressione enter, para manter o atual): ")
-            novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual)")
+            # Passando a informação, contida em 'nome_parcial' a um método
+            alunos = self.bd_alunos.ler_dados_alunos(info_aluno)
 
-            # Atualizando dicionário
-            novo_dado = {}
-            if novo_nome:
-                novo_dado['Nome'] = novo_nome
-            if nova_idade:
-                # Validando idade do aluno
-                if nova_idade.isdigit():
-                    novo_dado['Idade'] = int(nova_idade)
-                else:
-                    print('Idade inválida!')
-                    return
-            if novo_curso:
-                novo_dado['Curso'] = novo_curso
+            # Se aluno for achado
+            if alunos:
 
-            # Chamando função para substituir dados aluno
-            self.bd_alunos.alterar_dados(info_aluno, novo_dado)
+                # Novos dados para o aluno
+                novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual): ")
+                nova_idade = input("Digite a nova idade (ou pressione enter, para manter o atual): ")
+                novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual): ")
+
+                # Atualizando dicionário
+                novo_dado = {}
+                if novo_nome:
+                    novo_dado['Nome'] = novo_nome
+                if nova_idade:
+                    # Validando idade do aluno
+                    if nova_idade.isdigit():
+                        novo_dado['Idade'] = int(nova_idade)
+                    else:
+                        print('Idade inválida!')
+                        return
+                if novo_curso:
+                    novo_dado['Curso'] = novo_curso
+
+                # Chamando função para substituir dados aluno
+                self.bd_alunos.alterar_dados(info_aluno, novo_dado)
+
+            else:
+                print("Aluno não encontrado com esse nome!")
 
         elif submenu.lower() == 'p':
             info_professor = input("Digite o nome o nome do professor a ser atualizado: ")
 
-            # Novos dados para o professor
-            novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual): ")
-            nova_idade = input("Digite a nova idade (ou pressione enter, para manter a atual): ")
-            nova_disciplina = input("Digite a nova disciplina (ou pressione enter, para manter a atual): ")
+            # Passando a informação, contida em 'nome_parcial' a um método
+            professores = self.bd_professores.ler_dados_professores(info_professor)
 
-            novo_dado = {}
-            if novo_nome:
-                novo_dado['Nome'] = novo_nome
-            if nova_idade:
-                # Validando idade do professor
-                if nova_idade.isdigit():
-                    novo_dado['Idade'] = int(nova_idade)
-                else:
-                    print("Idade inválida!")
-                    return
-            if nova_disciplina:
-                novo_dado['Disciplina'] = nova_disciplina
+            # Se professor for achado
+            if professores:
 
-            # Chamando a função para substituir dados do professor
-            self.bd_professores.alterar_dados(info_professor, novo_dado)
+                # Novos dados para o professor
+                novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual): ")
+                nova_idade = input("Digite a nova idade (ou pressione enter, para manter a atual): ")
+                nova_disciplina = input("Digite a nova disciplina (ou pressione enter, para manter a atual): ")
+
+                novo_dado = {}
+                if novo_nome:
+                    novo_dado['Nome'] = novo_nome
+                if nova_idade:
+                    # Validando idade do professor
+                    if nova_idade.isdigit():
+                        novo_dado['Idade'] = int(nova_idade)
+                    else:
+                        print("Idade inválida!")
+                        return
+                if nova_disciplina:
+                    novo_dado['Disciplina'] = nova_disciplina
+
+                # Chamando a função para substituir dados do professor
+                self.bd_professores.alterar_dados(info_professor, novo_dado)
+
+            # Se o professor não for encontrado
+            else:
+                print("Professor não encontrado com esse nome!")
 
         else:
             print("Opção inválida! Digite uma opção válida.")
