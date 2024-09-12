@@ -89,13 +89,13 @@ class Bd_Professores(Professor):
 # Excluindo informações do banco de dados de professores
     def deletar_dados(self, nome_professor):
         try:
-            professores = self.ler_dados_professores()
+            professores = self.ler_dados_professores("")
             professor_encontrado = False
 
             with open(self.data_base, 'w') as arquivo:
                 for professor in professores:
                     if professor['Nome'].lower() != nome_professor.lower():
-                        linha = f"{professor['Nome']}, {professor['Idade']}, {professor['disciplina']}\n"
+                        linha = f"Nome: {professor['Nome']}, Idade: {professor['Idade']}, Disciplina: {professor['disciplina']}\n"
                         arquivo.write(linha)
                     else:
                         professor_encontrado = True

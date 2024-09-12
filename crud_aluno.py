@@ -91,13 +91,13 @@ class Bd_Alunos(Aluno):
 # Excluindo informações do banco de dados de alunos
     def deletar_dados(self, nome_aluno):
         try:
-            alunos = self.ler_dados_alunos()
+            alunos = self.ler_dados_alunos("")
             aluno_encontrado = False
 
             with open(self.data_base, 'w') as arquivo:
                 for aluno in alunos:
                     if aluno['Nome'].lower() != nome_aluno.lower():
-                        linha = f"{aluno['Nome']}, {aluno['Idade']}, {aluno['Curso']}\n"
+                        linha = f"Nome: {aluno['Nome']}, Idade: {aluno['Idade']}, Curso: {aluno['Curso']}\n"
                         arquivo.write(linha)
                     else:
                         aluno_encontrado = True
