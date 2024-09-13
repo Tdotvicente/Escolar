@@ -20,3 +20,14 @@ def Criar_banco_de_dados(diretorio, nome_arquivo):
         print(f"Arquivo '{caminho_arquivo}' existente")
 
     return caminho_arquivo
+
+# Função para fazer limpeza de tela e não ficar com excesso linhas de comando
+# Independente do sistema operacional escolhido, para operar esse programa
+def Limpar_tela():
+    # Recurso para sistema Unix/OS X
+    if os.name == 'posix':
+        _ = os.system('clear')
+
+    # Recurso para sistema windows
+    else:
+        _ = os.system('cls')
