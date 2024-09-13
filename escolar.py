@@ -1,5 +1,6 @@
 from crud_aluno import Bd_Alunos
 from crud_professor import Bd_Professores
+from crud import Limpar_tela
 
 class Menu_cli(Bd_Alunos, Bd_Professores):
     def __init__(self):
@@ -9,7 +10,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
     # Criando opções para um menu CRUD em CLI
     def mostrar_menu(self):
         while True:
-            print("MENU CRUD-CLI\n")
+            print("\nMENU ESCOLAR CLI\n")
             print("1. Cadastrar")
             print("2. Ler")
             print("3. Atualizar")
@@ -38,6 +39,9 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
 
     # Implementando menu de cadastro
     def submenu_cadastrar(self):
+
+        # Limpa excesso de informação
+        Limpar_tela()
         print("Digite A, cadastrar aluno ou digite P, para cadastrar professor")
 
         submenu = input("Escolha a opção do menu: ")
@@ -48,6 +52,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             nome = input("Nome completo: ")
             idade = input('Idade: ')
             curso = input("Curso desejado: ")
+            print()
 
             # Validando idade do aluno
             if not idade.isdigit():
@@ -87,6 +92,9 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
 
     # Lendo dados do elemento cadastrado
     def submenu_ler(self):
+
+        #Limpa excesso de informação
+        Limpar_tela()
         print("Digite A, ler dados do aluno ou digite P, para ler dados do professor")
 
         submenu = input("Escolha a opção do menu: ")
@@ -129,6 +137,9 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
 
     # Atualizando informações
     def submenu_atualizar(self):
+
+        # Limpa excesso de informação
+        Limpar_tela()
         print("Digite A para atualizar dados de aluno")
         print("Digite P para atualizar dados do professor")
 
@@ -146,7 +157,8 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
                 # Novos dados para o aluno
                 novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual): ")
                 nova_idade = input("Digite a nova idade (ou pressione enter, para manter o atual): ")
-                novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual): \n")
+                novo_curso = input("Digite o novo curso (ou pressione enter, para manter o atual): ")
+                print()
 
                 # Atualizando dicionário
                 novo_dado = {}
@@ -182,6 +194,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
                 novo_nome = input("Digite o novo nome (ou pressione enter, para manter o atual): ")
                 nova_idade = input("Digite a nova idade (ou pressione enter, para manter a atual): ")
                 nova_disciplina = input("Digite a nova disciplina (ou pressione enter, para manter a atual): ")
+                print()
 
                 novo_dado = {}
                 if novo_nome:
@@ -210,6 +223,9 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
 
     # apagando a informação
     def submenu_excluir(self):
+
+        # Limpa excesso de informação
+        Limpar_tela()
         print("Digite A, para excluir o aluno ou digite P, Para excluir o professor")
 
         submenu = input("Escolha a opção do menu: ")
@@ -232,6 +248,9 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             return
 
     def submenu_buscar(self):
+
+        # Limpa excesso de informação
+        Limpar_tela()
         print("Digite A, para aluno ou P, para professor")
 
         submenu = input("Escolha a opção do menu: ")
@@ -244,7 +263,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             if resultado:
                 print("Aluno(s) encontrado(s)!")
                 for aluno in resultado:
-                    print(aluno,'\n')
+                    print(aluno)
 
             else:
                 print("Aluno(s) não encontrado(s)\n")
@@ -257,7 +276,7 @@ class Menu_cli(Bd_Alunos, Bd_Professores):
             if resultado:
                 print("Aluno(s) encontra(s)!")
                 for professor in resultado:
-                    print(professor,'\n')
+                    print(professor)
 
             else:
                 print("Professor(es) não encontrado(s)!\n")
