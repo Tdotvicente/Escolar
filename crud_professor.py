@@ -1,6 +1,7 @@
 from professor import Professor
 from crud import Criar_banco_de_dados
 
+
 # Configurando parâmetros básicos de banco de dados CRUD
 class Bd_Professores(Professor):
     def __init__(self, nome, idade, disciplina, caminho='banco_de_dados', arquivo='banco_de_dados_professor.txt'):
