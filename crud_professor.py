@@ -12,7 +12,7 @@ class Bd_Professores(Professor):
     def gravar_dados_professor(self):
         try:
             with open(self.data_base, 'a') as arquivo:
-                linha = f"Nome: {self.nome}, Idade: {self.idade}, Disciplina: {self.disciplina}\n"
+                linha = f"Nome: {self.nome}, Idade: {self.idade} anos, Disciplina: {self.disciplina}\n"
                 arquivo.write(linha)
 
         except Exception as erro:
@@ -72,7 +72,7 @@ class Bd_Professores(Professor):
                         atualizado = True
 
                     # reescrevendo as informações no banco de dados
-                    linha = f"Nome: {professor['Nome']}, Idade: {professor['Idade']}, Disciplina: {professor['Disciplina']}\n"
+                    linha = f"Nome: {professor['Nome']}, Idade: {professor['Idade']} anos, Disciplina: {professor['Disciplina']}\n"
                     arquivo.write(linha)
 
             if atualizado:
@@ -96,7 +96,7 @@ class Bd_Professores(Professor):
             with open(self.data_base, 'w') as arquivo:
                 for professor in professores:
                     if professor['Nome'].lower() != nome_professor.lower():
-                        linha = f"Nome: {professor['Nome']}, Idade: {professor['Idade']}, Disciplina: {professor['disciplina']}\n"
+                        linha = f"Nome: {professor['Nome']}, Idade: {professor['Idade']} anos, Disciplina: {professor['disciplina']}\n"
                         arquivo.write(linha)
                     else:
                         professor_encontrado = True
