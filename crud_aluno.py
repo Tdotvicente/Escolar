@@ -12,7 +12,7 @@ class Bd_Alunos(Aluno):
     def gravar_dados_aluno(self):
         try:
             with open(self.data_base, 'a') as arquivo:
-                linha = f"Nome: {self.nome}, Idade: {self.idade}, Curso: {self.curso}\n"
+                linha = f"Nome: {self.nome}, Idade: {self.idade} anos, Curso: {self.curso}\n"
                 arquivo.write(linha)
 
         except Exception as erro:
@@ -72,7 +72,7 @@ class Bd_Alunos(Aluno):
                         atualizado = True
 
                     # Revisando os novos dados, antes de substitui-los
-                    linha = f"Nome: {aluno['Nome']}, Idade: {aluno['Idade']}, Curso: {aluno['Curso']}\n"
+                    linha = f"Nome: {aluno['Nome']}, Idade: {aluno['Idade']} anos, Curso: {aluno['Curso']}\n"
                     arquivo.write(linha)
 
             if atualizado:
@@ -97,7 +97,7 @@ class Bd_Alunos(Aluno):
             with open(self.data_base, 'w') as arquivo:
                 for aluno in alunos:
                     if aluno['Nome'].lower() != nome_aluno.lower():
-                        linha = f"Nome: {aluno['Nome']}, Idade: {aluno['Idade']}, Curso: {aluno['Curso']}\n"
+                        linha = f"Nome: {aluno['Nome']}, Idade: {aluno['Idade']} anos, Curso: {aluno['Curso']}\n"
                         arquivo.write(linha)
                     else:
                         aluno_encontrado = True
