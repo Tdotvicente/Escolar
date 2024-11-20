@@ -1,6 +1,6 @@
 """
 Script criado em 28/10/2024
-Script atualizado em 19/10/2024
+Script atualizado em 19/11/2024
 
 @Autor: Thiago Vicente
 """
