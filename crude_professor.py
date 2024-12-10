@@ -1,6 +1,26 @@
 """
 Script criado em 28/10/2024
-Script atualizado em /11/2024
+Script atualizado em 21/11/2024
+
+Script: crud_professpr.py
+
+Descrição:
+Este script implementa uma classe para manipulação do banco de dados de alunos. 
+Ele encapsula as operações básicas de um CRUD (Create, Read, Update, Delete) aplicadas a um sistema de gestão escolar ou curso.
+
+Funcionalidades principais:
+1. Herda as funções básicas do script crud.py, reutilizando métodos gerais de manipulação de dados.
+2. Carrega o banco de dados e cria um cabeçalho contendo informações inciais, caso seja a primeira vez iniciado
+3. Grava informações cadastradas no banco de dados, incluindo nome, idade e curso.
+4. Lê e exibe as informações completa do professor com base em um nome parcial ou total informado.
+5. Permite a atualização de dados existentes, substituindo informações imprecisas ou desatualizadas.
+6. Exclui permanentemente do banco de dados as informações do professor selecionados.
+7. Realiza buscas flexíveis por nome parcial, retornando todos os registros correspondentes.
+
+Observações adicionais:
+- Todos os dados são armazenados em memória enquanto o programa está em execução.
+- Requer implementação consistente do script crud.py para funcionamento adequado.
+- Foi projetado para ser reutilizável e integrável com interfaces de usuário (CLI, GUI, etc.).
 
 @Autor: Thiago Vicente
 """
@@ -11,7 +31,7 @@ from openpyxl import load_workbook
 
 
 # Carrecando informações basicas dentro do script
-class Bd_professores(Professor):
+class Bd_Professores(Professor):
     def __init__(self, nome, idade, disciplina, caminho="banco_de_dados", arquivo="Banco_de_dados.xlsx"):
         super().__init__(nome, idade, disciplina)
         self.banco_de_dados = Criar_banco_de_dados(caminho, arquivo)
@@ -21,12 +41,18 @@ class Bd_professores(Professor):
     def iniciar_planilha(self):
         try:
             wb = load_workbook(self.banco_de_dados)
-            sheet = wb["Professores"]
+            if "Sheet" in  wb.sheetnames and "Professores" not in wb.sheetnames:
+                sheet = wb["Sheet"]
+                sheet.title = "Professores"
 
-            # Verificando o cabeçalho está configurado
-            if sheet.max_row == 1 and sheet.cell(row=1, column=1).value is None:
-                sheet.append(["Nome", "Idade", "Disciplina"])
-                wb.save(self.banco_de_dados)
+                if sheet.max_row == 1:
+                    sheet.append(["Nome", "Idade", "Disciplinas"])
+
+            elif "Professores" not in wb.sheetnames:
+                sheet = wb.create_sheet("Professores")
+                sheet.append(["Nome", "Idade", "Disciplinas"])
+
+            wb.save(self.banco_de_dados)
 
         except Exception as erro:
             print(f"Erro ao criar planilha {erro}")
@@ -130,5 +156,23 @@ class Bd_professores(Professor):
     # função de buscar professor pelo nome parcial onde direfente da função
     # ler dados do professor. Essa só retorna os nomes e não informações completas
     def buscar_dados(self, nome_parcial):
-        professores_encontrados = self.ler_dados_professor(nome_parcial)
-        return [professor["Nome"] for professor in professores_encontrados]
+        professores_encontrados = []
+
+        try:
+            wb = load_workbook(self.banco_de_dados)
+            sheet = wb['Professores']
+
+            for linha in sheet.iter_rows(min_row=2, max_col=1):
+                nome = linha[0].value
+
+                if nome and nome_parcial.lower() in nome.lower():
+                    professores_encontrados.append(nome)
+
+            return professores_encontrados
+
+
+        except FileNotFoundError:
+            print("Banco de dados não encontrado")
+
+        except Exception as erro:
+            print(f"Erro inesperado: {erro}")

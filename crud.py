@@ -1,17 +1,9 @@
 """
 Script criado em 28/10/2024
-Script atualizado em 19/11/2024
+Script atualizado em /12/2024
 
 @Autor: Thiago Vicente
-"""
 
-from openpyxl import Workbook, load_workbook
-import os
-import shutil
-import threading
-import time
-
-'''
 As funções abaixo foram criadas para gerenciar um banco de dados Excel (xlsx) de forma segura,
 incluindo a criação, recuperação de backups, monitoramento e atualização periódica para minimizar
 os riscos de perda de dados ou corrupção do banco de dados.
@@ -34,7 +26,14 @@ Função 4 - `Verificar_e_recuperar_banco`:
 Função 5 - `monitorar_banco`: 
    - Executa em segundo plano, verificando periodicamente a integridade do banco de dados.
    - Atualiza o backup e realiza recuperação automática, se necessário.
-'''
+"""
+
+from openpyxl import Workbook, load_workbook
+import os
+import shutil
+import threading
+import time
+
 
 
 def Criar_banco_de_dados(diretorio, banco_de_dados):
@@ -136,17 +135,3 @@ def monitorar_banco(caminho_arquivo, intervalo=600):
     # Inicia o monitoramento em uma nova thread
     threading.Thread(target=monitor, daemon=True).start()
 
-
-'''
-Função para limpar a tela, evitando o excesso de informações exibidas.
-Funciona em qualquer sistema operacional.
-'''
-
-
-def Limpar_tela():
-    # Recurso para sistemas Unix/OS X
-    if os.name == 'posix':
-        _ = os.system('clear')
-    # Recurso para sistemas Windows
-    else:
-        _ = os.system('cls')
